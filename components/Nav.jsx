@@ -10,7 +10,7 @@ const Nav = () => {
     return (
         <div className='container mx-auto flex justify-between mb-16 pt-3'>
             <Link href={'/'} className="flex justify-center gap-2" >
-                {/* <Image src={''} */} Logo
+                <Image src={'/assets/images/chatbot.png'} height={40} width={40} alt="ChatBot Logo" />
                 <p className="logo_text">Promptify</p>
             </Link>
 
