@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -10,25 +10,18 @@ const UpdatePrompt = () => {
     const searchParams = useSearchParams();
     const promptId = searchParams.get("id");
 
-    const [post, setPost] = useState({ prompt: "", tag: "" });
+    const [post, setPost] = useState({ prompt: "", tag: "", });
     const [submitting, setIsSubmitting] = useState(false);
-    const [loading, setLoading] = useState(true); // New state for loading
 
     useEffect(() => {
         const getPromptDetails = async () => {
-            try {
-                const response = await fetch(`/api/prompt/${promptId}`);
-                const data = await response.json();
-                console.log(data);
-                setPost({
-                    prompt: data.prompt,
-                    tag: data.tag,
-                });
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false); // Set loading to false once data is fetched
-            }
+            const response = await fetch(`/api/prompt/${promptId}`);
+            const data = await response.json();
+
+            setPost({
+                prompt: data.prompt,
+                tag: data.tag,
+            });
         };
 
         if (promptId) getPromptDetails();
@@ -50,7 +43,7 @@ const UpdatePrompt = () => {
             });
 
             if (response.ok) {
-                router.back();
+                router.push("/");
             }
         } catch (error) {
             console.log(error);
@@ -59,20 +52,9 @@ const UpdatePrompt = () => {
         }
     };
 
-    if (loading) {
-        // Suspense: Show loading indicator or fallback UI while data is being fetched
-        return <img
-            src='assets/icons/loader.svg'
-            width={50}
-            height={50}
-            alt='loader'
-            className='absolute -translate-x-1/2 left-1/2 -translate-y-1/2 top-1/2'
-        />;
-    }
-
     return (
         <Form
-            type='Update'
+            type='Edit'
             post={post}
             setPost={setPost}
             submitting={submitting}
