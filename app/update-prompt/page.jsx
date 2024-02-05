@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Form from "@components/Form";
@@ -71,13 +71,15 @@ const UpdatePrompt = () => {
     }
 
     return (
-        <Form
-            type='Update'
-            post={post}
-            setPost={setPost}
-            submitting={submitting}
-            handleSubmit={updatePrompt}
-        />
+        <Suspense fallback={<img src='assets/icons/loader.svg' alt='Loading' />}>
+            <Form
+                type='Update'
+                post={post}
+                setPost={setPost}
+                submitting={submitting}
+                handleSubmit={updatePrompt}
+            />
+        </Suspense>
     );
 };
 
