@@ -4,9 +4,10 @@ let isConnected = false; // track the connection
 
 export const connectToDB = async () => {
     mongoose.set('strictQuery', true);
+
     if (isConnected) {
-        console.log('MongoDB is already connected')
-        return
+        console.log('MongoDB is already connected');
+        return;
     }
 
     try {
@@ -14,13 +15,15 @@ export const connectToDB = async () => {
             dbName: "share_prompt",
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        })
+            // Additional options can be added here
+        });
 
         isConnected = true;
-
-        console.log('MongoDB is connected')
+        console.log('MongoDB is connected');
 
     } catch (error) {
-        console.log(error)
+        console.error('Error connecting to MongoDB:', error);
+        // Throw the error or handle it appropriately based on your application's needs
+        throw error;
     }
-}
+};
