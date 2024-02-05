@@ -61,7 +61,13 @@ const UpdatePrompt = () => {
 
     if (loading) {
         // Suspense: Show loading indicator or fallback UI while data is being fetched
-        return <p>Loading...</p>;
+        return <img
+            src='assets/icons/loader.svg'
+            width={50}
+            height={50}
+            alt='loader'
+            className='absolute -translate-x-1/2 left-1/2 -translate-y-1/2 top-1/2'
+        />;
     }
 
     return (
