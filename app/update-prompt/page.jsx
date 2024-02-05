@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -10,18 +8,25 @@ const UpdatePrompt = () => {
     const searchParams = useSearchParams();
     const promptId = searchParams.get("id");
 
-    const [post, setPost] = useState({ prompt: "", tag: "", });
+    const [post, setPost] = useState({ prompt: "", tag: "" });
     const [submitting, setIsSubmitting] = useState(false);
+    const [loading, setLoading] = useState(true); // New state for loading
 
     useEffect(() => {
         const getPromptDetails = async () => {
-            const response = await fetch(`/api/prompt/${promptId}`);
-            const data = await response.json();
-            console.log(data)
-            setPost({
-                prompt: data.prompt,
-                tag: data.tag,
-            });
+            try {
+                const response = await fetch(`/api/prompt/${promptId}`);
+                const data = await response.json();
+                console.log(data);
+                setPost({
+                    prompt: data.prompt,
+                    tag: data.tag,
+                });
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false); // Set loading to false once data is fetched
+            }
         };
 
         if (promptId) getPromptDetails();
@@ -51,6 +56,11 @@ const UpdatePrompt = () => {
             setIsSubmitting(false);
         }
     };
+
+    if (loading) {
+        // Suspense: Show loading indicator or fallback UI while data is being fetched
+        return <p>Loading...</p>;
+    }
 
     return (
         <Form
